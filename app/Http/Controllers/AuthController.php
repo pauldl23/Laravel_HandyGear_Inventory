@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -28,7 +27,7 @@ class AuthController extends Controller
 
         $user = User::where('username', $request->username)->first();
 
-        if ($user && $request->password === $user->password) {
+        if ($user && Hash::check($request->password, $user->password)) {
             Session::put('loggedin', true);
             Session::put('username', $user->username);
             Session::put('userID', $user->userID);
