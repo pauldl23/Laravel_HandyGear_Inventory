@@ -29,3 +29,4 @@ use App\Http\Controllers\ManageUsersController;
 Route::get('/manage-users', [ManageUsersController::class, 'index'])->name('manage_users.index');
 Route::post('/manage-users', [ManageUsersController::class, 'store'])->name('manage_users.store');
 Route::post('/manage-users/delete/{id}', [ManageUsersController::class, 'destroy'])->name('manage_users.destroy');
+
