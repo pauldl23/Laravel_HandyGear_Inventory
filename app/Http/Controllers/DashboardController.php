@@ -13,6 +13,6 @@ class DashboardController extends Controller
         $total_categories = DB::table('tbl_inventory')->distinct('product_category')->count('product_category');
         $total_orders = DB::table('tbl_transaction')->where('transaction_type', 'Purchase')->count();
 
-        return view('dashboard', compact('total_items', 'total_categories', 'total_orders'));
+        return view('admin.dashboard', compact('total_items', 'total_categories', 'total_orders'));
     }
 }

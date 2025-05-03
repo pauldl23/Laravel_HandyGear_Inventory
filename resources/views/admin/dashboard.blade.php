@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.sidebar')
 
 @section('content')
-@include('layouts.sidebar') <!-- Include sidebar -->
 
-<div id="dashboard" class="main-content" style="margin-left: 270px;">
+<div id="dashboard" class="main-content" style="margin-left: 50px;">
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <h1>Dashboard</h1>
     <p>Welcome to the Inventory Management System dashboard!</p>
 
