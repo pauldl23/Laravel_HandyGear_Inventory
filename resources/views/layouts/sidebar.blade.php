@@ -26,6 +26,10 @@
                 @php $usertype = session('usertype', 'Admin'); @endphp
                 @if($usertype === 'Admin')
                     <li><a href="{{ url('/dashboard') }}" class="sidebar-link">Dashboard</a></li>
+                    <li><a href="{{ url('/inventory') }}" class="sidebar-link">Inventory</a></li>
+                    <li><a href="{{ url('/manage_users') }}" class="sidebar-link">Manage Users</a></li>
+                    <li><a href="{{ url('/reports/low-stock') }}" class="sidebar-link">Reports</a></li>
+
                 @elseif($usertype === 'User')
                 <li><a href="{{ route('browse.items') }}" class="sidebar-link">Browse Items</a></li>
                     <li><a href="#" class="sidebar-link">Help/Support</a></li>

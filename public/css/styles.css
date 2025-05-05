@@ -478,27 +478,32 @@
 
 /* Base styles for the page */
 
+
+/* Report Page Styling */
+
 #report {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    padding: 30px;
     margin-left: 270px;
-    /* Assuming a sidebar exists */
+    min-height: 100vh;
 }
 
 #report .container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     background-color: #ffffff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 30px;
+    overflow: hidden;
 }
 
 #report h1,
 #report h3 {
     text-align: center;
-    color: #333;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
 #report .list-group {
@@ -510,44 +515,56 @@
 #report .list-group-item {
     display: flex;
     justify-content: space-between;
-    background: linear-gradient(45deg, #d1e0e0, #f2f9f9);
-    border: 1px solid #ccc;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    transition: transform 0.3s ease;
+    align-items: center;
+    background: #ecf0f1;
+    border: none;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.25s ease;
 }
 
 #report .list-group-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    background-color: #dfe6e9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 #report .badge {
-    background-color: #f9c74f;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 15px;
+    background-color: #e74c3c;
+    color: #fff;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 500;
 }
 
 #report .log-table {
     width: 100%;
     margin-top: 30px;
-    border-collapse: collapse;
-    background-color: #fafafa;
-}
-
-#report .log-table th,
-#report .log-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0 10px;
 }
 
 #report .log-table th {
-    background-color: #e0e0e0;
-    font-weight: bold;
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: 6px 6px 0 0;
+    text-align: left;
+}
+
+#report .log-table td {
+    background-color: #fefefe;
+    padding: 14px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 15px;
+}
+
+#report .log-table tbody tr {
+    transition: background-color 0.2s ease;
 }
 
 #report .log-table tbody tr:hover {
@@ -556,10 +573,13 @@
 
 #report .text-center {
     text-align: center;
+    color: #888;
+    margin-top: 20px;
+    font-style: italic;
 }
 
 #report .mt-5 {
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 
