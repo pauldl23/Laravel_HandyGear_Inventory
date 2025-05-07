@@ -21,5 +21,24 @@
             <p>{{ $total_orders }}</p>
         </div>
     </div>
+
+    <div class="mt-5">
+    <h3>Low Stock Report</h3>
+    <p>Items with Quantity Below 20</p>
+
+    @if($low_stock_items->isEmpty())
+        <p class="text-center mt-3">No low stock items at the moment.</p>
+    @else
+        <ul class="list-group">
+            @foreach($low_stock_items as $item)
+                <li class="list-group-item">
+                    <span>{{ $item->product_name }}</span>
+                    <span class="badge">{{ $item->product_quantity }} left</span>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+    </div>
+
 </div>
 @endsection

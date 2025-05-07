@@ -5,6 +5,7 @@
 <div id="manage-users" style="margin-left: 50px;">
     <h1>Manage Users</h1>
 
+    <!-- Success Message -->
     @if(session('success'))
         <p style="color: green;">{{ session('success') }}</p>
     @endif
@@ -79,5 +80,20 @@
             </tbody>
         </table>
     </div>
+
+            @if($errors->any())
+            <div style="color: red;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <p style="color: red;">{{ session('error') }}</p>
+        @endif
+
 </div>
 @endsection

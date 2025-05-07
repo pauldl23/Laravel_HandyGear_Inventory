@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 
 class AuthController extends Controller
@@ -17,6 +19,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        
         // Optional: Prevent multiple admins logged in
         if (Session::get('loggedin') && Session::get('usertype') === 'Admin') {
           return back()->with('admin_active', 'The system is currently being accessed by an admin. Please try again later.');
@@ -39,13 +42,15 @@ class AuthController extends Controller
             Session::put('usertype', $user->usertype);
 
             // Log the login
-            Log::create([
+            DB::table('tbl_logs')->insert([
                 'user_id' => $user->userID,
                 'timestamp' => now()
             ]);
 
             return redirect($user->usertype === 'Admin' ? '/dashboard' : '/browse-items');
         }
+
+        
 
         return back()->with('error', 'Invalid username or password.');
     }

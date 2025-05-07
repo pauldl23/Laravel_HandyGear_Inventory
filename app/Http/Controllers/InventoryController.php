@@ -9,10 +9,8 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        // Categories for dropdown
         $categories = ['Power Tools', 'Material', 'Machinery', 'Electrical Components', 'Hand Tools', 'Safety Equipments'];
 
-        // Fetch all inventory items
         $items = DB::table('tbl_inventory')
             ->whereNotNull('product_name')
             ->where('product_name', '!=', '')
@@ -27,7 +25,7 @@ class InventoryController extends Controller
             'product_name' => 'required|string',
             'product_id' => 'required|string',
             'product_price' => 'required|numeric',
-            'product_quantity' => 'required|integer',
+            'product_quantity' => 'required|integer|min:0',
             'product_category' => 'required|string',
         ]);
 
@@ -39,7 +37,7 @@ class InventoryController extends Controller
             'product_category' => $request->product_category,
         ]);
 
-        return redirect()->route('admin.inventory')->with('success', 'Product added successfully!');
+        return redirect()->route('inventory')->with('success', 'Product added successfully!');
     }
 
     public function edit(Request $request, $id)
@@ -52,7 +50,7 @@ class InventoryController extends Controller
         ]);
 
         DB::table('tbl_inventory')
-            ->where('inventory_ID', $id)
+            ->where('product_ID', $id)
             ->update([
                 'product_name' => $request->product_name,
                 'product_ID' => $request->product_id,
@@ -60,35 +58,44 @@ class InventoryController extends Controller
                 'product_category' => $request->product_category,
             ]);
 
-        return redirect()->route('admin.inventory')->with('success', 'Product updated successfully!');
+        return redirect()->route('inventory')->with('success', 'Product updated successfully!');
     }
 
     public function adjustQuantity(Request $request, $id)
     {
         $request->validate([
-            'quantity_change' => 'required|integer',
+            'quantity_change' => 'required|integer|min:1',
             'adjust_quantity' => 'required|string|in:add,subtract',
         ]);
 
-        $quantityChange = $request->adjust_quantity === 'add'
-            ? (int) $request->quantity_change
-            : -(int) $request->quantity_change;
+        $item = DB::table('tbl_inventory')->where('product_ID', $id)->first();
+
+        if (!$item) {
+            return redirect()->route('inventory')->with('error', 'Item not found.');
+        }
+
+        $currentQuantity = $item->product_quantity;
+        $change = (int) $request->quantity_change;
+
+        $newQuantity = $request->adjust_quantity === 'subtract'
+            ? max(0, $currentQuantity - $change)
+            : $currentQuantity + $change;
 
         DB::table('tbl_inventory')
-            ->where('inventory_ID', $id)
+            ->where('product_ID', $id)
             ->update([
-                'product_quantity' => DB::raw('GREATEST(0, product_quantity + ' . $quantityChange . ')')
+                'product_quantity' => $newQuantity
             ]);
 
-        return redirect()->route('admin.inventory')->with('success', 'Quantity adjusted successfully!');
+        return redirect()->route('inventory')->with('success', 'Quantity adjusted successfully!');
     }
 
     public function delete($id)
     {
         DB::table('tbl_inventory')
-            ->where('inventory_ID', $id)
+            ->where('product_ID', $id)
             ->delete();
 
-        return redirect()->route('admin.inventory')->with('success', 'Product deleted successfully!');
+        return redirect()->route('inventory')->with('success', 'Product deleted successfully!');
     }
 }
