@@ -1,16 +1,17 @@
 @extends('layouts.sidebar')
 
+
+
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
 <div id="manage-users" style="margin-left: 50px;">
     <h1>Manage Users</h1>
 
-    <!-- Success Message -->
     @if(session('success'))
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <!-- Add User Form -->
     <div class="manage-users-card">
         <h3>Add New User</h3>
         <form method="POST" action="{{ route('manage_users.store') }}">
@@ -47,7 +48,6 @@
         </form>
     </div>
 
-    <!-- Users Table -->
     <div class="manage-users-card">
         <h3>Existing Users</h3>
         <table class="manage-users-table">
@@ -63,6 +63,7 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
+                    <!-- Display Row -->
                     <tr>
                         <td>{{ $user->userID }}</td>
                         <td>{{ $user->username }}</td>
@@ -70,30 +71,60 @@
                         <td>{{ $user->lastname }}</td>
                         <td>{{ $user->usertype }}</td>
                         <td>
-                            <form method="POST" action="{{ route('manage_users.destroy', $user->userID) }}">
+                            <button onclick="toggleEditForm({{ $user->userID }})">Edit</button>
+                            <form method="POST" action="{{ route('manage_users.destroy', $user->userID) }}" style="display:inline;">
                                 @csrf
                                 <button type="submit" class="manage-users-delete-btn" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         </td>
+                    </tr>
+                    
+                    <!-- Edit Row -->
+                    <tr id="edit-form-{{ $user->userID }}" class="edit-form-row" style="display: none;">
+                        <form method="POST" action="{{ route('manage_users.edit', $user->userID) }}">
+                            @csrf
+                            
+                                    <!-- Empty cell for left margin -->
+                              <td></td>
+                            <td><input type="text" name="username" value="{{ $user->username }}" required></td>
+                            <td><input type="text" name="firstname" value="{{ $user->firstname }}" required></td>
+                            <td><input type="text" name="lastname" value="{{ $user->lastname }}" required></td>
+                            <td>
+                                <select name="usertype" required>
+                                    <option value="Admin" {{ $user->usertype == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="User" {{ $user->usertype == 'User' ? 'selected' : '' }}>User</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit">Save</button>
+                                <button type="button" onclick="toggleEditForm({{ $user->userID }})">Cancel</button>
+                            </td>
+                        </form>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
-            @if($errors->any())
-            <div style="color: red;">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @if($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        @if(session('error'))
-            <p style="color: red;">{{ session('error') }}</p>
-        @endif
-
+    @if(session('error'))
+        <p style="color: red;">{{ session('error') }}</p>
+    @endif
 </div>
+
+<script>
+    function toggleEditForm(userId) {
+        const formRow = document.getElementById(`edit-form-${userId}`);
+        formRow.style.display = (formRow.style.display === "none" || formRow.style.display === "") ? "table-row" : "none";
+    }
+</script>
 @endsection

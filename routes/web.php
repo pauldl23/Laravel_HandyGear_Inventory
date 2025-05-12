@@ -26,9 +26,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
   // 👥 Manage Users routes
   Route::get('/manage_users', [ManageUsersController::class, 'index'])->name('manage_users');
-    Route::post('/manage_users', [ManageUsersController::class, 'store'])->name('manage_users.store');
-    Route::post('/manage_users/delete/{id}', [ManageUsersController::class, 'destroy'])->name('manage_users.destroy');
-  
+  Route::post('/manage_users/store', [ManageUsersController::class, 'store'])->name('manage_users.store');
+  Route::post('/manage_users/destroy/{id}', [ManageUsersController::class, 'destroy'])->name('manage_users.destroy');
+  Route::post('/manage_users/edit/{id}', [ManageUsersController::class, 'edit'])->name('manage_users.edit');
+
   
   Route::get('/reports/low-stock', [ReportController::class, 'lowStock'])->name('reports');
 });

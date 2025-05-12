@@ -62,35 +62,55 @@
 
                         <button class="btn btn-warning" onclick="toggleEditForm('{{ $item->product_ID }}')">Edit</button>
 
-                        <form method="post" action="{{ route('inventory.delete', $item->product_ID) }}" style="display:inline;">
+                        <form method="post" action="{{ route('inventory.delete', $item->product_ID) }}" style="display:inline;" onsubmit="return confirmDelete('{{ $item->product_name }}')">
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
+                            
                         </form>
                     </td>
                 </tr>
 
                 <tr id="edit-row-{{ $item->product_ID }}" class="edit-row" style="display: none;">
                     <td colspan="6">
-                        <form method="post" action="{{ route('inventory.edit', $item->product_ID) }}">
+                        <form method="post" action="{{ route('inventory.edit', $item->product_ID) }}" class="edit-form">
                             @csrf
-                            <input type="text" name="product_name" value="{{ $item->product_name }}" required>
-                            <input type="text" name="product_id" value="{{ $item->product_ID }}" required>
-                            <input type="number" step="0.01" name="product_price" value="{{ $item->product_price }}" required>
 
-                            <select name="product_category" required>
-                                <option value="">Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category }}" {{ $category == $item->product_category ? 'selected' : '' }}>
-                                        {{ $category }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <div class="form-group">
+                                <label for="product_name_{{ $item->product_ID }}">Product Name</label>
+                                <input type="text" id="product_name_{{ $item->product_ID }}" name="product_name" value="{{ $item->product_name }}" required>
+                            </div>
 
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" onclick="toggleEditForm('{{ $item->product_ID }}')">Cancel</button>
+                            <div class="form-group">
+                                <label for="product_id_{{ $item->product_ID }}">Product ID</label>
+                                <input type="text" id="product_id_{{ $item->product_ID }}" name="product_id" value="{{ $item->product_ID }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_price_{{ $item->product_ID }}">Product Price</label>
+                                <input type="number" step="0.01" id="product_price_{{ $item->product_ID }}" name="product_price" value="{{ $item->product_price }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_category_{{ $item->product_ID }}">Product Category</label>
+                                <select id="product_category_{{ $item->product_ID }}" name="product_category" required>
+                                    <option value="">Select Category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category }}" {{ $category == $item->product_category ? 'selected' : '' }}>
+                                            {{ $category }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div style="margin-top: 15px;">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="toggleEditForm('{{ $item->product_ID }}')">Cancel</button>
+                            </div>
                         </form>
                     </td>
                 </tr>
+
+
             @endforeach
         </tbody>
     </table>
@@ -101,6 +121,12 @@
         const editRow = document.getElementById(`edit-row-${id}`);
         editRow.style.display = editRow.style.display === 'none' ? '' : 'none';
     }
+
+    function confirmDelete(productName) {
+        return confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`);
+    }
+
+
 </script>
 
 @endsection

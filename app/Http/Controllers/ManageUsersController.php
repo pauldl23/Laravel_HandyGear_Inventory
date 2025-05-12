@@ -56,4 +56,29 @@ class ManageUsersController extends Controller
     
         return redirect()->route('manage_users')->with('success', 'User deleted successfully.');
     }
+
+    public function edit(Request $request, $id)
+{
+    // Validate the updated data (no password since this is edit)
+    $request->validate([
+        'username' => 'required',
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'usertype' => 'required'
+    ]);
+
+    // Update user data
+    DB::table('tbl_users')
+        ->where('userID', $id)
+        ->update([
+            'username' => $request->username,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'usertype' => $request->usertype
+        ]);
+
+    return redirect()->route('manage_users')->with('success', 'User updated successfully.');
+    }
 }
+
+

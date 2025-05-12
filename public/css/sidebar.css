@@ -30,6 +30,8 @@
     background: white;
     color: #ff5500;
     border-radius: 10px;
+    width: 70%;
+    margin-left: 10%;
 }
 
 
@@ -55,11 +57,14 @@
     border-radius: 5px;
     font-weight: 500;
     transition: all 0.3s ease;
+    width: 200px;
 }
 
 #sidebar-admin-user nav ul li a:hover {
     background: rgba(255, 255, 255, 0.8);
     color: #ff5500;
+    width: 50%;
+    margin-left: 16%;
 }
 
 #sidebar-admin-user nav ul li a.active {
@@ -67,6 +72,8 @@
     color: #ff5500;
     font-weight: bold;
     opacity: 80%;
+    width: 50%;
+    margin-left: 16%;
 }
 
 
