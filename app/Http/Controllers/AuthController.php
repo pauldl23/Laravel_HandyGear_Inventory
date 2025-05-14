@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -16,52 +17,43 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-
+    
     public function login(Request $request)
-    {
-        
-        // Optional: Prevent multiple admins logged in
-        if (Session::get('loggedin') && Session::get('usertype') === 'Admin') {
-          return back()->with('admin_active', 'The system is currently being accessed by an admin. Please try again later.');
-        }
+        {
+            if (Session::get('loggedin') && Session::get('usertype') === 'Admin') {
+                return back()->with('admin_active', 'The system is currently being accessed by an admin. Please try again later.');
+            }
 
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-
-        // Find user by username
-        $user = User::where('username', $request->username)->first();
-
-        // Check password directly (not hashed)
-        if ($user && $user->password === $request->password) {
-            // Set session values
-            Session::put('loggedin', true);
-            Session::put('username', $user->username);
-            Session::put('userID', $user->userID);
-            Session::put('usertype', $user->usertype);
-
-            // Log the login
-            DB::table('tbl_logs')->insert([
-                'user_id' => $user->userID,
-                'timestamp' => now()
+            $request->validate([
+                'username' => 'required',
+                'password' => 'required',
             ]);
 
-            return redirect($user->usertype === 'Admin' ? '/dashboard' : '/browse-items');
+            $user = User::where('username', $request->username)->first();
+            
+            // ✅ Use Hash::check to verify the hashed password
+            if ($user && Hash::check($request->password, $user->password)) {
+                Session::put('loggedin', true);
+                Session::put('username', $user->username);
+                Session::put('userID', $user->userID);
+                Session::put('usertype', $user->usertype);
+
+                DB::table('tbl_logs')->insert([
+                    'user_id' => $user->userID,
+                    'timestamp' => now()
+                ]);
+
+                return redirect($user->usertype === 'Admin' ? '/dashboard' : '/browse-items');
+            }
+
+            return back()->with('error', 'Invalid username or password.');
         }
 
-        
-
-        return back()->with('error', 'Invalid username or password.');
-    }
-
-
     public function logout(Request $request)
-    {
-        $request->session()->flush(); // this clears all session data
-        return redirect('/login'); // redirects to login page
-    }
-    
+{
+    Session::flush(); // clear all session data
+    return redirect('/login')->with('success', 'Logged out successfully.');
+}
 
 
 }

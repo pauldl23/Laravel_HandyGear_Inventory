@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
 
         // ADD THIS
         'is.admin' => \App\Http\Middleware\IsAdmin::class,
+        'auth.custom' => \App\Http\Middleware\EnsureUserIsAuthenticated::class,
 
     ];
 }

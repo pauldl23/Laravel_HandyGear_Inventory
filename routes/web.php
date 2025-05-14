@@ -12,7 +12,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //Admin-only routes
-Route::middleware(['web', 'is.admin'])->group(function () {
+Route::middleware(['web', 'auth.custom','is.admin'])->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //Add other admin pages here
 
