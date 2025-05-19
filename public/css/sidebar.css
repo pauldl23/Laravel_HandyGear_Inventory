@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-/* Sidebar Styling for Admin/User */
+/* === Sidebar Styling === */
 
 #sidebar-admin-user {
     width: 250px;
@@ -18,7 +18,6 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     font-family: 'Poppins', sans-serif;
-    /* Apply Poppins font */
 }
 
 #sidebar-admin-user .logo {
@@ -26,12 +25,12 @@
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
-    padding: 10px 10px;
+    padding: 10px;
     background: white;
     color: #ff5500;
     border-radius: 10px;
     width: 70%;
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 
@@ -58,36 +57,31 @@
     font-weight: 500;
     transition: all 0.3s ease;
     width: 200px;
+    margin: 0 auto;
 }
 
 #sidebar-admin-user nav ul li a:hover {
     background: rgba(255, 255, 255, 0.8);
     color: #ff5500;
-    width: 50%;
-    margin-left: 16%;
 }
 
 #sidebar-admin-user nav ul li a.active {
     background: white;
     color: #ff5500;
     font-weight: bold;
-    opacity: 80%;
-    width: 50%;
-    margin-left: 16%;
+    opacity: 0.8;
 }
 
 
-/* Adjusting Log Out Section to Move Higher */
+/* Logout Button */
 
 #sidebar-admin-user .logout {
     margin-top: 20px;
-    /* Adjusted to move the logout higher */
     padding: 10px;
+    text-align: center;
 }
 
 #sidebar-admin-user .logout button {
-    margin-left: 5%;
-    display: block;
     width: 90%;
     padding: 10px;
     font-size: 16px;
@@ -104,7 +98,7 @@
 }
 
 
-/* Main Content Styling */
+/* === Main Content Styling === */
 
 #main-content {
     margin-left: 270px;
@@ -112,12 +106,72 @@
     width: calc(100% - 270px);
     background: #f9f9f9;
     box-sizing: border-box;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 #main-content h1 {
     color: #ff5500;
     font-size: 28px;
     margin-bottom: 20px;
-    font-family: 'Poppins', sans-serif;
-    /* Ensure title also uses Poppins */
+}
+
+
+/* === Mobile-Friendly Sidebar to Topbar === */
+
+@media (max-width: 768px) {
+    #sidebar-admin-user {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 10px;
+    }
+    #sidebar-admin-user .logo {
+        font-size: 16px;
+        width: 100%;
+        margin: 5px 0 10px 0;
+        background: none;
+        color: white;
+    }
+    #sidebar-admin-user nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    #sidebar-admin-user nav ul li a {
+        font-size: 14px;
+        width: auto;
+        padding: 8px 12px;
+        margin: 0;
+    }
+    #sidebar-admin-user nav ul li a:hover,
+    #sidebar-admin-user nav ul li a.active {
+        background: rgba(255, 255, 255, 0.8);
+        color: #ff5500;
+    }
+    #sidebar-admin-user .logout {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        padding: 0;
+    }
+    #sidebar-admin-user .logout button {
+        font-size: 14px;
+        width: 90%;
+        padding: 8px;
+    }
+    #main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        background: #f9f9f9 !important;
+        padding: 15px;
+    }
+    #main-content h1 {
+        font-size: 22px;
+        text-align: center;
+    }
 }

@@ -5,7 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-<div id="manage-users" style="margin-left: 50px;">
+<div id="manage-users" style="margin-left: 10px;">
     <h1>Manage Users</h1>
 
     @if(session('success'))

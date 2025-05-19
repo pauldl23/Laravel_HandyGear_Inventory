@@ -27,6 +27,7 @@
                 @if($usertype === 'Admin')
                     <li><a href="{{ url('/dashboard') }}" class="sidebar-link">Dashboard</a></li>
                     <li><a href="{{ url('/inventory') }}" class="sidebar-link">Inventory</a></li>
+                    <li><a href="{{ url('/orders') }}" class="sidebar-link">Orders</a></li>
                     <li><a href="{{ url('/manage_users') }}" class="sidebar-link">Manage Users</a></li>
                     <li><a href="{{ url('/reports/low-stock') }}" class="sidebar-link">Activity Logs</a></li>
 
@@ -45,7 +46,8 @@
         </div>
     </div>
 
-    <div style="margin-left: 270px;">
+    <div id="main-content">
+
         @yield('content')
     </div>
 </div>

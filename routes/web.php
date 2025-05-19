@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\OrderController;
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
@@ -32,6 +33,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
   
   Route::get('/reports/low-stock', [ReportController::class, 'lowStock'])->name('reports');
+  
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 });
 
 // User-only routes

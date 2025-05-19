@@ -20,4 +20,5 @@ class DashboardController extends Controller
     
         return view('admin.dashboard', compact('total_items', 'total_categories', 'total_orders', 'low_stock_items'));
     }
+
 }

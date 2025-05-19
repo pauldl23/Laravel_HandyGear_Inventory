@@ -22,20 +22,23 @@ class InventoryController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-            'product_name' => 'required|string',
-            'product_id' => 'required|string',
-            'product_price' => 'required|numeric',
-            'product_quantity' => 'required|integer|min:0',
-            'product_category' => 'required|string',
-        ]);
+        'product_name' => 'required|string',
+        'product_price' => 'required|numeric',
+        'product_quantity' => 'required|integer|min:0',
+        'product_category' => 'required|string',
+    ]);
 
-        DB::table('tbl_inventory')->insert([
-            'product_name' => $request->product_name,
-            'product_ID' => $request->product_id,
-            'product_price' => $request->product_price,
-            'product_quantity' => $request->product_quantity,
-            'product_category' => $request->product_category,
-        ]);
+    // Generate ID like LB-1028-HH
+    $product_id = 'HG-' . rand(1000, 9999) . '-IS';
+
+    DB::table('tbl_inventory')->insert([
+        'product_name' => $request->product_name,
+        'product_ID' => $product_id,
+        'product_price' => $request->product_price,
+        'product_quantity' => $request->product_quantity,
+        'product_category' => $request->product_category,
+    ]);
+
 
         return redirect()->route('inventory')->with('success', 'Product added successfully!');
     }
@@ -43,20 +46,19 @@ class InventoryController extends Controller
     public function edit(Request $request, $id)
     {
         $request->validate([
-            'product_name' => 'required|string',
-            'product_id' => 'required|string',
-            'product_price' => 'required|numeric',
-            'product_category' => 'required|string',
-        ]);
+        'product_name' => 'required|string',
+        'product_price' => 'required|numeric',
+        'product_category' => 'required|string',
+    ]);
 
-        DB::table('tbl_inventory')
-            ->where('product_ID', $id)
-            ->update([
-                'product_name' => $request->product_name,
-                'product_ID' => $request->product_id,
-                'product_price' => $request->product_price,
-                'product_category' => $request->product_category,
-            ]);
+    DB::table('tbl_inventory')
+        ->where('product_ID', $id)
+        ->update([
+            'product_name' => $request->product_name,
+            'product_price' => $request->product_price,
+            'product_category' => $request->product_category,
+    ]);
+
 
         return redirect()->route('inventory')->with('success', 'Product updated successfully!');
     }
